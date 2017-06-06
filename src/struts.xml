@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+
+    <constant name="struts.enable.DynamicMethodInvocation" value="true" />
+    <constant name="struts.devMode" value="true" />
+
+    <package name="default" namespace="/" extends="struts-default">
+        <default-action-ref name="index" />
+        <global-results>
+            <result name="error">/WEB-INF/error.jsp</result>
+            <result name="success"></result>
+        </global-results>
+
+        <global-exception-mappings>
+            <exception-mapping exception="java.lang.Exception" result="error"/>
+        </global-exception-mappings>
+
+    </package>
+
+    <!-- Add packages here -->
+    
+    <package name="loginAndregister" namespace="/MainPackage" extends="struts-default">
+    	<!-- 登陆Action -->
+    	<action name="login" class="action.LoginAction" method="login">
+    		<result name="login">login.jsp</result>
+    		<result name="success">index.jsp</result>
+    	</action>
+    	<!-- 注销Action -->
+    	<action name="logout" class="action.LvuAction" method="loginout">
+    		<result name="success">index.jsp</result>
+    	</action>
+    	
+    	<!-- 注册Action -->
+    	<action name="register" class="action.LoginAction" method="register">
+    		<result name="register">register.jsp</result>
+    		<result name="success">index.jsp</result>
+    	</action>
+    	
+    	<!-- 跳转到添加分享page-->
+    	<action name="turnToadd" class="action.LoginAction" method="turnToadd">
+	   		<result name="success">lvu_add.jsp</result>
+    	</action>
+    	
+    	<!-- 添加作品 -->
+    	<action name="lvu_add" class="action.LvuAction" method="add">
+    		<result name="success">index.jsp</result>
+    	</action>
+    	
+    	<!-- 修改作品 -->
+    	<action name="lvu_edit" class="action.LvuAction" method="edit">
+    		<result name="success">lvu_edit.jsp</result>
+    	</action>
+    	<action name="lvu_update" class="action.LvuAction" method="update">
+    		<result name="success">index.jsp</result>
+    	</action>
+    	
+    	<!-- 删除作品 -->
+    	<action name="lvu_delete" class="action.LvuAction" method="delete">
+    		<result name="success">index.jsp</result>
+    	</action>
+    	
+    	<!-- 跳转个人页面Action-->
+    	<action name="person" class="action.UserAction" method="turnToindex">
+    		<result name="success">../person/index.jsp</result>
+    		<result name="error">../home/login.jsp</result>
+    	</action>
+    	
+    	<!-- 实时更新作品列表 -->
+    	<action name="worksList" class="action.LvuAction" method="execute">
+    		<result name="success">index.jsp</result>
+    	</action>
+    	
+    	<!-- 跳转到作品详细页面 -->
+    	<action name="worksDetail" class="action.LvuAction" method="getWorkByTitle">
+    		<result name="success">lvu_detail.jsp</result>
+    	</action>
+    	
+    	<action name="index" class="action.LvuAction" method="execute">
+    		<result name="success">index.jsp</result>
+    	</action>
+    	
+    	<!-- 关于不同Action跳转 和 同意action不同方法跳转 
+    		第一种方式:
+			假设你execute方法return值为"SUCCESS"
+			<action name="当前uri" class="com.huayu.struts.DianPingAction">
+			    <result name="SUCCESS" type="redirect">当前uri!跳转方法.action</result>
+			</action>
+			这里一定要写type="redirect"。
+			
+			第二种方式:
+			在execute方法中直接return dplist()。 -->
+			
+    </package>
+ 
+</struts>
